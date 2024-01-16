@@ -136,9 +136,29 @@ namespace ArangoDBNetStandard.IndexApi
         /// <param name="body">The properties of the new index.</param>
         /// <param name="token">A CancellationToken to observe while waiting for the task to complete or to cancel the task.</param>
         /// <returns></returns>  
-        public virtual async Task<IndexResponseBase> PostIndexAsync(PostIndexQuery query, 
+        public virtual async Task<IndexResponseBase> PostIndexAsync(PostIndexQuery query,
             PostIndexBody body,
             CancellationToken token = default)
+        {
+            return await PostIndexAsync(query, body, token).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Generic method to create an index.
+        /// It is highly recommended that you use a specialized method like
+        /// <see cref="PostGeoSpatialIndexAsync(PostIndexQuery, PostGeoSpatialIndexBody, CancellationToken)"/>
+        /// to create indexes. Use this method to create indexes that do not
+        /// have a specialized method available.
+        /// </summary>
+        /// <param name="query">Query parameters for the request.</param>
+        /// <param name="body">The properties of the new index.</param>
+        /// <param name="token">A CancellationToken to observe while waiting for the task to complete or to cancel the task.</param>
+        /// <returns></returns>  
+        protected virtual async Task<IndexResponseBase> PostIndexAsync<TIndex>(PostIndexQuery query,
+            TIndex body,
+            CancellationToken token = default)
+            where TIndex : PostIndexBody
         {
             string uri = _indexApiPath;
 

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace ArangoDBNetStandardTest.Serialization.Models
 {
@@ -20,6 +21,7 @@ namespace ArangoDBNetStandardTest.Serialization.Models
         public Number EnumToConvert { get; set; }
 
         [JsonProperty(PropertyName = "nameFromJsonProperty")]
+        [JsonPropertyName("nameFromJsonProperty")]
         public string PropertyWithDifferentJsonName { get; set; }
 
         public Dictionary<string, object> MyStringDict { get; set; }
